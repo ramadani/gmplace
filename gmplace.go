@@ -1,5 +1,15 @@
 package gmplace
 
+import (
+	"encoding/json"
+	"io/ioutil"
+	"log"
+	"net/http"
+	"net/url"
+	"path"
+	"time"
+)
+
 // GoogleMapsPlaceBaseAPI base api of google maps place
 const GoogleMapsPlaceBaseAPI = "https://maps.googleapis.com/maps/api/place"
 
@@ -42,16 +52,40 @@ type AutocompleteResult struct {
 
 // GmPlace go package struct
 type GmPlace struct {
-	key string
+	key        string
+	httpClient *http.Client
 }
 
 // Autocomplete Google Maps Place Autocomplete
 // https://developers.google.com/places/web-service/autocomplete
 func (p *GmPlace) Autocomplete(input string) (*AutocompleteResult, error) {
-	return nil, nil
+	var result *AutocompleteResult
+
+	u, err := url.Parse(GoogleMapsPlaceBaseAPI)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	u.Path = path.Join(u.Path, "/autocomplete/json")
+	q := u.Query()
+	q.Set("key", p.key)
+	q.Set("input", input)
+	u.RawQuery = q.Encode()
+
+	resp, err := p.httpClient.Get(u.String())
+	if err != nil {
+		log.Println(err)
+	}
+
+	buf, _ := ioutil.ReadAll(resp.Body)
+	json.Unmarshal(buf, &result)
+
+	return result, err
 }
 
 // New Google Maps Place
 func New(key string) *GmPlace {
-	return &GmPlace{key}
+	return &GmPlace{key, &http.Client{
+		Timeout: time.Second * 10,
+	}}
 }
