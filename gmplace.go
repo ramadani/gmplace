@@ -1,5 +1,8 @@
 package gmplace
 
+// GoogleMapsPlaceBaseAPI base api of google maps place
+const GoogleMapsPlaceBaseAPI = "https://maps.googleapis.com/maps/api/place"
+
 // Prediction entity
 type Prediction struct {
 	ID                   string               `json:"id"`
@@ -37,6 +40,18 @@ type AutocompleteResult struct {
 	Status      string       `json:"status"`
 }
 
-func Autocomplete() {
+// GmPlace go package struct
+type GmPlace struct {
+	key string
+}
 
+// Autocomplete Google Maps Place Autocomplete
+// https://developers.google.com/places/web-service/autocomplete
+func (p *GmPlace) Autocomplete(input string) (*AutocompleteResult, error) {
+	return nil, nil
+}
+
+// New Google Maps Place
+func New(key string) *GmPlace {
+	return &GmPlace{key}
 }
