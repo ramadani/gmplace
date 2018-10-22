@@ -1,7 +1,7 @@
 package gmplace
 
-// PredictionItem entity
-type PredictionItem struct {
+// Prediction entity
+type Prediction struct {
 	ID                   string               `json:"id"`
 	Description          string               `json:"description"`
 	MatchedSubstrings    []MatchedSubstring   `json:"matched_substrings"`
@@ -29,6 +29,12 @@ type StructuredFormatting struct {
 type Term struct {
 	Offset int    `json:"offset"`
 	Value  string `json:"value"`
+}
+
+// AutocompleteResult Google Maps Place Autocomplete results
+type AutocompleteResult struct {
+	Predictions []Prediction `json:"predictions"`
+	Status      string       `json:"status"`
 }
 
 func Autocomplete() {
