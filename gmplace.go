@@ -77,6 +77,8 @@ func (p *GmPlace) Autocomplete(input string) (*AutocompleteResult, error) {
 		log.Println(err)
 	}
 
+	defer resp.Body.Close()
+
 	buf, _ := ioutil.ReadAll(resp.Body)
 	json.Unmarshal(buf, &result)
 
