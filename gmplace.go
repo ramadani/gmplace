@@ -3,7 +3,6 @@ package gmplace
 import (
 	"encoding/json"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"net/url"
 	"path"
@@ -63,7 +62,7 @@ func (p *GmPlace) Autocomplete(input string) (*AutocompleteResult, error) {
 
 	u, err := url.Parse(GoogleMapsPlaceBaseAPI)
 	if err != nil {
-		log.Fatal(err)
+		return nil, err
 	}
 
 	u.Path = path.Join(u.Path, "/autocomplete/json")
@@ -74,7 +73,7 @@ func (p *GmPlace) Autocomplete(input string) (*AutocompleteResult, error) {
 
 	resp, err := p.httpClient.Get(u.String())
 	if err != nil {
-		log.Println(err)
+		return nil, err
 	}
 
 	defer resp.Body.Close()
