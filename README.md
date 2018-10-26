@@ -15,8 +15,8 @@ import "github.com/ramadani/gmplace"
 
 gmplace := gmplace.New("YOUR_GOOGLE_API_KEY")
 res, err := gmplace.Autocomplete(map[string]string{
-  "input":    "uii",
-  "language": "id",
+  "input":    "your keyword",
+  "language": "your language id",
 })
 
 if err != nil {
