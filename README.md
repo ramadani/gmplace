@@ -11,8 +11,13 @@ go get github.com/ramadani/gmplace
 ## Usage
 
 ```go
+import "github.com/ramadani/gmplace"
+
 gmplace := gmplace.New("YOUR_GOOGLE_API_KEY")
-res, err := gmplace.Autocomplete("your keyword")
+res, err := gmplace.Autocomplete(map[string]string{
+  "input":    "uii",
+  "language": "id",
+})
 
 if err != nil {
   log.Println(err)
@@ -22,11 +27,6 @@ if err != nil {
 ```
 
 For result response, you can see it at https://developers.google.com/places/web-service/autocomplete#place_autocomplete_responses
-
-## To Do
-
-- [ ] Support for search by [Optional parameters](https://developers.google.com/places/web-service/autocomplete#place_autocomplete_requests)
-
 
 ## License
 

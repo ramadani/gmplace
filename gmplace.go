@@ -57,7 +57,7 @@ type GmPlace struct {
 
 // Autocomplete Google Maps Place Autocomplete
 // https://developers.google.com/places/web-service/autocomplete
-func (p *GmPlace) Autocomplete(input string) (*AutocompleteResult, error) {
+func (p *GmPlace) Autocomplete(params map[string]string) (*AutocompleteResult, error) {
 	var result *AutocompleteResult
 
 	u, err := url.Parse(GoogleMapsPlaceBaseAPI)
@@ -68,7 +68,11 @@ func (p *GmPlace) Autocomplete(input string) (*AutocompleteResult, error) {
 	u.Path = path.Join(u.Path, "/autocomplete/json")
 	q := u.Query()
 	q.Set("key", p.key)
-	q.Set("input", input)
+
+	for key, value := range params {
+		q.Set(key, value)
+	}
+
 	u.RawQuery = q.Encode()
 
 	resp, err := p.httpClient.Get(u.String())
