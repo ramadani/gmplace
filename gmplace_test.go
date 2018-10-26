@@ -11,8 +11,8 @@ func TestAutocomplete(t *testing.T) {
 	assert := assert.New(t)
 	gmplace := gmplace.New("YOUR_GOOGLE_API_KEY")
 	res, err := gmplace.Autocomplete(map[string]string{
-		"input":    "uii",
-		"language": "id",
+		"input":    "your keyword",
+		"language": "your language id",
 	})
 
 	assert.Nil(err)
